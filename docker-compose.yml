@@ -1,0 +1,32 @@
+# docker-compose.yml
+
+version: '3'
+
+services:
+  app:
+    container_name: bestApp
+    build: app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  db:
+    container_name: bestDB
+    image: mongo
+    volumes:
+      - ${PWD}/mongo-data:/data/db
+    ports:
+      - "27017:27017"
+
+  nginx:
+    container_name: bestNginx
+    build: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+
+volumes:
+  mongo-data:
+
